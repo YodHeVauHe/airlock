@@ -97,7 +97,7 @@ python -m pytest        # 18 tests: policy, lifecycle, receipts, API, torture co
 One command on a fresh Ubuntu VM:
 
 ```bash
-bash deploy/setup-vm.sh https://github.com/YOURNAME/airlock.git
+bash deploy/setup-vm.sh https://github.com/YodHeVauHe/airlock.git
 ```
 
 or paste `deploy/cloud-init.yml` as the Vultr Cloud-Init user data at deploy time.

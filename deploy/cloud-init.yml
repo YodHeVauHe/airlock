@@ -2,7 +2,7 @@
 # Vultr "Cloud-Init user-data" for a fresh Ubuntu 24.04 VM.
 # Paste this into the Vultr console when deploying; it installs Docker,
 # clones Airlock, builds the sandbox image, and boots the control plane.
-# Replace the git URL (and optionally add your inference key below).
+# Replace YOUR_INFERENCE_KEY below after provisioning Serverless Inference.
 package_update: true
 packages: [git, ca-certificates, curl]
 runcmd:
@@ -13,7 +13,7 @@ runcmd:
   - apt-get update -y
   - apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
   - systemctl enable --now docker
-  - git clone --depth 1 https://github.com/YOURNAME/airlock.git /srv/airlock
+  - git clone --depth 1 https://github.com/YodHeVauHe/airlock.git /srv/airlock
   - cd /srv/airlock
   - |
     cat > .env <<EOF

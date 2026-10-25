@@ -3,7 +3,7 @@
 # Run as root:  bash setup-vm.sh [git-url] [branch]
 set -euo pipefail
 
-REPO_URL="${1:-https://github.com/YOURNAME/airlock.git}"
+REPO_URL="${1:-https://github.com/YodHeVauHe/airlock.git}"
 BRANCH="${2:-main}"
 APP_DIR="/srv/airlock"
 

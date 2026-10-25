@@ -42,6 +42,6 @@ To produce: dark mission-control screenshot — task timeline with risk tags + b
 panel + CONTAINED banner. (Ask ZCode to render/screenshot, or capture from the live app.)
 
 ## Links
-- GitHub repo: (push airlock/ here)
+- GitHub repo: https://github.com/YodHeVauHe/airlock
 - Demo URL: http://<vultr-vm-ip>/ (or domain)
 - Video: (per docs/video-storyboard.md)

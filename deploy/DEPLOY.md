@@ -17,7 +17,7 @@ Two options — both take about 5 minutes.
 ```bash
 ssh root@<vm-ip>
 apt-get update && apt-get install -y git
-git clone https://github.com/YOURNAME/airlock.git /srv/airlock
+git clone https://github.com/YodHeVauHe/airlock.git /srv/airlock
 bash /srv/airlock/deploy/setup-vm.sh
 ```
 
