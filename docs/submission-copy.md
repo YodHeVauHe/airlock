@@ -38,10 +38,14 @@ vultr, sandboxing, docker, agents, code-execution, ai-safety, fastapi, serverles
 containment, receipts
 
 ## Cover image
-To produce: dark mission-control screenshot — task timeline with risk tags + blast-radius
-panel + CONTAINED banner. (Ask ZCode to render/screenshot, or capture from the live app.)
+`submission/cover.png` (1280×720) — brand-matched banner with the pipeline chips and a real
+torture-run terminal capture. Regenerate with `python tools/build_cover.py`.
+
+## Slide presentation
+`submission/airlock-slides.pptx` — 10 slides, 16:9, dark mission-control theme. Regenerate with
+`python tools/build_deck.py`.
 
 ## Links
 - GitHub repo: https://github.com/YodHeVauHe/airlock
-- Demo URL: http://<vultr-vm-ip>/ (or domain)
-- Video: (per docs/video-storyboard.md)
+- Demo URL: http://<vultr-vm-ip>/ (or domain — fill in after kickoff-day deploy)
+- Video: (record per docs/video-storyboard.md after the Vultr deploy)
