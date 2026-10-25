@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Task {{ task.id[:8] }}{% endblock %}
+{% block content %}
+<div class="task-header">
+  <span class="mono" style="color: var(--dimmer);">{{ task.id }}</span>
+  <span class="pill pill-{{ task.status }}" id="status-pill">{{ task.status }}</span>
+  <span class="goal" id="goal-text">{{ task.goal }}</span>
+  <span class="nav-spacer"></span>
+  <a class="btn btn-secondary btn-small" href="/api/tasks/{{ task.id }}/receipt">⧉ Download receipt</a>
+</div>
+
+<div class="task-grid">
+  <div class="panel" style="margin-top:0;">
+    <h2>Mission timeline <span class="muted" id="ev-count"></span></h2>
+    <div class="timeline" id="timeline">
+      <div class="empty" id="tl-empty">Waiting for events…</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="panel" style="margin-top:0;">
+      <h2>Blast radius</h2>
+      <div class="br-score">
+        <span class="big" id="br-score">0</span>
+        <span class="lbl">max risk observed on host<br>(sandbox damage doesn't count)</span>
+      </div>
+      <div class="br-rows">
+        <div class="br-row"><span class="k">secrets exposed</span><span class="v v-ok" id="br-secrets">none — env never enters sandbox</span></div>
+        <div class="br-row"><span class="k">network egress</span><span class="v v-ok" id="br-net">none — sandbox has no route out</span></div>
+        <div class="br-row"><span class="k">processes escaped</span><span class="v v-ok" id="br-proc">0</span></div>
+        <div class="br-row"><span class="k">sandbox lifecycle</span><span class="v" id="br-lifecycle">pending…</span></div>
+        <div class="br-row"><span class="k">event chain</span><span class="v" id="br-chain">building…</span></div>
+        <div class="br-row"><span class="k">host fingerprint</span><span class="v" id="br-host">—</span></div>
+      </div>
+      <div class="empty mt8" id="br-verdict"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Artifacts <span class="muted">written by the sandbox</span></h2>
+      <div class="artifact-list" id="artifacts">
+        <div class="empty">none yet</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Agent's explanation <span class="muted">from real outputs</span></h2>
+      <div class="explain" id="explain"><span class="empty">the explainer runs after execution…</span></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>window.TASK_ID = "{{ task.id }}";</script>
+<script src="/static/task.js"></script>
+{% endblock %}

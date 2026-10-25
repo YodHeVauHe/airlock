@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Airlock{% endblock %} — blast-radius-zero agents on Vultr</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🛰️</text></svg>">
+</head>
+<body>
+  <nav class="topnav">
+    <a class="brand" href="/">air<span class="brand-accent">lock</span></a>
+    <span class="tagline">give your agent real work — zero blast radius</span>
+    <span class="nav-spacer"></span>
+    <span class="badge badge-dim" id="nav-driver">{{ driver }}</span>
+    <span class="badge badge-dim" id="nav-llm">{{ llm_mode }}</span>
+    <a class="navlink" href="/torture">Torture chamber</a>
+  </nav>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer>
+    <span>Airlock · Vultr: Agent Rush Hackathon · Challenge 1 — Blast Radius Zero</span>
+    <span>plan → dispatch → verify → destroy · every action hash-chained &amp; receipted</span>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

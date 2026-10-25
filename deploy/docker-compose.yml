@@ -1,0 +1,30 @@
+# Airlock production stack on the Vultr VM.
+# The control plane runs in a container and spawns sandbox containers as
+# SIBLINGS on the host docker daemon (mounted socket, read-only).
+services:
+  airlock:
+    build:
+      context: ..
+      dockerfile: deploy/control-plane.Dockerfile
+    container_name: airlock-control
+    restart: unless-stopped
+    ports:
+      - "80:8000"
+    environment:
+      AIRLOCK_DRIVER: docker
+      AIRLOCK_SANDBOX_IMAGE: airlock-sandbox:latest
+      AIRLOCK_POLICY_MODE: enforce
+      AIRLOCK_INFERENCE_BASE_URL: ${AIRLOCK_INFERENCE_BASE_URL:-https://api.vultrinference.com/v1}
+      AIRLOCK_INFERENCE_API_KEY: ${AIRLOCK_INFERENCE_API_KEY:-}
+      AIRLOCK_INFERENCE_MODEL: ${AIRLOCK_INFERENCE_MODEL:-}
+      AIRLOCK_MOCK_LLM: ${AIRLOCK_MOCK_LLM:-0}
+      AIRLOCK_PUBLIC_URL: ${AIRLOCK_PUBLIC_URL:-}
+      # throwaway-instance driver (experimental, off by default)
+      VULTR_API_KEY: ${VULTR_API_KEY:-}
+      AIRLOCK_VULTR_DRIVER: ${AIRLOCK_VULTR_DRIVER:-0}
+      AIRLOCK_VULTR_REGION: ${AIRLOCK_VULTR_REGION:-ewr}
+    volumes:
+      - airlock-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+volumes:
+  airlock-data:

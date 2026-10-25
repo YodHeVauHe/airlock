@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Torture chamber{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>The <span class="accent">torture chamber</span></h1>
+  <p>Don't take our word for containment — detonate things inside the sandbox and watch it absorb
+  them. Each test runs in a fresh disposable environment with the exact same protections as a real
+  task: no network, no secrets, read-only rootfs, hard resource caps. The host fingerprint is hashed
+  before and after every detonation; if it ever changes, that's a breach — you'll see it in red.</p>
+</section>
+
+<div class="verdict-banner" id="verdict-banner"></div>
+
+<section class="panel">
+  <h2>Weapons rack <span class="muted">— one click each; every run is streamed &amp; receipted like a real task</span></h2>
+  <div class="torture-grid">
+    {% for t in tests %}
+    <div class="tcard">
+      <div class="t-title">{{ t.title }}</div>
+      <div class="t-expected">{{ t.expected }}</div>
+      <div class="t-foot">
+        <button class="btn btn-danger btn-small detonate" data-test="{{ t.key }}">⚡ Detonate</button>
+        <span class="mono" style="color: var(--dimmer); font-size: 11.5px;" id="tstat-{{ t.key }}"></span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Recent detonations</h2>
+  {% if recent %}
+  <table class="tasklist">
+    <tr><th>task</th><th>test</th><th>status</th><th>created</th></tr>
+    {% for t in recent %}
+    <tr>
+      <td class="mono"><a href="/task/{{ t.id }}">{{ t.id[:8] }}</a></td>
+      <td>{{ t.goal[:60] }}</td>
+      <td><span class="pill pill-{{ t.status }}">{{ t.status }}</span></td>
+      <td class="mono">{{ t.created_at|int }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">Nothing detonated yet.</div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.detonate').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const key = btn.dataset.test;
+    const stat = document.getElementById('tstat-' + key);
+    btn.disabled = true;
+    stat.innerHTML = '<span class="spinner"></span>arming…';
+    try {
+      const r = await fetch('/api/torture/' + key, { method: 'POST' });
+      const data = await r.json();
+      if (data.task_id) {
+        stat.innerHTML = 'detonating…';
+        const watch = setInterval(async () => {
+          const d = await (await fetch('/api/tasks/' + data.task_id)).json();
+          stat.textContent = 'status: ' + d.status;
+          if (['completed', 'failed', 'blocked'].includes(d.status)) {
+            clearInterval(watch);
+            btn.disabled = false;
+            const banner = document.getElementById('verdict-banner');
+            banner.style.display = 'block';
+            banner.textContent = d.status === 'completed'
+              ? `✔ ${key}: detonation contained. Host fingerprint unchanged. Receipt sealed. Open task ${data.task_id.slice(0,8)} for the full timeline.`
+              : `✖ ${key}: run ended with status ${d.status} — inspect the timeline.`;
+            banner.style.borderColor = d.status === 'completed' ? 'rgba(63,185,80,.5)' : 'rgba(248,81,73,.6)';
+            banner.style.color = d.status === 'completed' ? 'var(--accent2)' : 'var(--risk-high)';
+            stat.innerHTML = `<a href="/task/${data.task_id}">open timeline →</a>`;
+            location.reload();
+          }
+        }, 1500);
+      } else { stat.textContent = 'failed to arm'; btn.disabled = false; }
+    } catch (e) { stat.textContent = 'error: ' + e; btn.disabled = false; }
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Launch pad{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Give your AI agent <span class="accent">real work</span>.<br>Keep your blast radius at zero.</h1>
+  <p>Airlock plans a task with Vultr Serverless Inference, writes real code, executes it inside a
+  disposable sandbox on a Vultr VM — no network, no secrets, hard resource caps — streams every
+  action to you live, destroys the environment, and hands you a signed receipt of exactly what happened.</p>
+</section>
+
+<section class="panel">
+  <h2>New task</h2>
+  <form id="launch-form" class="launch-grid">
+    <div>
+      <div class="field">
+        <label for="goal">What should the agent do?</label>
+        <textarea id="goal" name="goal" rows="4"
+          placeholder="e.g. Analyze sales.csv: which region grew fastest quarter over quarter? Save a summary and chart it."></textarea>
+      </div>
+      <div class="lanes" id="lanes">
+        <div class="lane selected" data-lane="analyze">
+          <div class="lane-title">📊 Data analyst</div>
+          <div class="lane-desc">Upload a CSV/TSV — get real computed answers, summary tables, charts.</div>
+        </div>
+        <div class="lane" data-lane="fix">
+          <div class="lane-title">🔧 File fixer</div>
+          <div class="lane-desc">Upload a broken file — get a repaired version plus a report.</div>
+        </div>
+        <div class="lane" data-lane="chart">
+          <div class="lane-title">📈 Chart anything</div>
+          <div class="lane-desc">Describe the visual — get a rendered chart artifact.</div>
+        </div>
+      </div>
+      <div class="file-drop" id="file-drop">
+        Drop or choose files (optional, ≤ 5 files, ≤ 10 MB each) — click to browse
+        <input type="file" id="files" name="files" multiple hidden>
+      </div>
+      <div class="mt16">
+        <button class="btn" type="submit" id="launch-btn">Dispatch to sandbox →</button>
+        <span id="launch-error" style="color: var(--risk-high); font-size: 13px; margin-left: 10px;"></span>
+      </div>
+    </div>
+    <div class="how">
+      <div class="step"><div class="n">01</div><div class="t">Plan</div>
+        <div class="d">Vultr Serverless Inference turns your goal into a step-by-step approach.</div></div>
+      <div class="step"><div class="n">02</div><div class="t">Write code</div>
+        <div class="d">The agent writes a Python script. Policy scans it before it can run.</div></div>
+      <div class="step"><div class="n">03</div><div class="t">Execute sandboxed</div>
+        <div class="d">Fresh sandbox per attempt: no network, no secrets, CPU/mem/PID caps, wall-clock kill.</div></div>
+      <div class="step"><div class="n">04</div><div class="t">Verify &amp; destroy</div>
+        <div class="d">Real outputs explained, sandbox destroyed, hash-chained receipt sealed.</div></div>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>Recent runs <span class="muted">— every run leaves a receipt, never a trace</span></h2>
+  {% if tasks %}
+  <table class="tasklist">
+    <tr><th>task</th><th>goal</th><th>lane</th><th>status</th><th>created</th></tr>
+    {% for t in tasks %}
+    <tr>
+      <td class="mono"><a href="/task/{{ t.id }}">{{ t.id[:8] }}</a></td>
+      <td>{{ t.goal[:70] }}{% if t.goal|length > 70 %}…{% endif %}</td>
+      <td>{{ t.lane }}</td>
+      <td><span class="pill pill-{{ t.status }}">{{ t.status }}</span></td>
+      <td class="mono">{{ t.created_at|int }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <div class="empty">No runs yet — dispatch the first task above, or head to the
+  <a href="/torture">torture chamber</a> to watch the sandbox absorb attacks.</div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/app.js"></script>
+{% endblock %}
