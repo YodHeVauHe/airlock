@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/YodHeVauHe/airlock/security/advisories/new
+    about: Sandbox escapes, secret exposure, receipt forgery — report privately, never as a public issue.
+  - name: "Hackathon discussion (Vultr: Agent Rush)"
+    url: https://discord.gg/lablabai
+    about: Questions about the hackathon itself — kickoff, credits, submission logistics.

@@ -1,0 +1,40 @@
+name: ✨ Feature idea
+description: Propose an improvement or a new capability.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem it solves
+      description: What can't you do today? Who hits this — agent users, operators, contributors?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What should happen, concretely. Mockups or timeline sketches welcome.
+    validations:
+      required: true
+  - type: checkboxes
+    id: invariants
+    attributes:
+      label: Containment check
+      description: See the four invariants in CONTRIBUTING.md — features must preserve all of them.
+      options:
+        - label: This feature works within the containment invariants (or strengthens them)
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Pattern A (code execution lanes)
+        - Pattern B (browser-use lane)
+        - sandbox drivers (docker / local / vultr)
+        - policy engine
+        - UI / timeline / receipts
+        - deployment (Vultr, compose, cloud-init)
+        - other
+    validations:
+      required: true

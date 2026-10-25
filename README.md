@@ -2,6 +2,12 @@
 
 **Give your AI agent real work. Keep your blast radius at zero.**
 
+[![CI](https://github.com/YodHeVauHe/airlock/actions/workflows/ci.yml/badge.svg)](https://github.com/YodHeVauHe/airlock/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Python](https://img.shields.io/badge/python-3.12%2B-blue.svg)
+![Tests](https://img.shields.io/badge/tests-18%20passing-3fb950.svg)
+[![Security Policy](https://img.shields.io/badge/security-policy-informational.svg)](SECURITY.md)
+
 Airlock is a production-style web app that lets an AI agent perform real work — analyzing your
 data, generating charts, fixing your files — with **every action contained inside a disposable
 sandbox**: no network, no secrets, hard resource caps, destroyed after each task. Everything the
@@ -145,6 +151,19 @@ docs/design.md          the design document
 - **Originality** — torture chamber as a product feature, signed/verifiable run receipts,
   policy engine with blast-radius scoring, host fingerprint proof.
 
+## Contributing & community
+
+Contributions are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md) for the five-minute dev
+setup, the architecture orientation, and the containment invariants every change must respect.
+Security issues (sandbox escapes, secret exposure, receipt forgery) go through
+[SECURITY.md](SECURITY.md), never public issues. This project follows the
+[Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
+
 ## License
 
-MIT.
+[MIT](LICENSE) — free to use, modify, and build on. If Airlock helps your project, a star and a
+link back are appreciated.

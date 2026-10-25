@@ -1,0 +1,44 @@
+name: 🐛 Bug report
+description: Something broke, or behaved against its contract.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. If this is a **security issue** (sandbox escape, secret
+        exposure, receipt forgery), stop here and use
+        [private vulnerability reporting](https://github.com/YodHeVauHe/airlock/security/advisories/new) instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you ran, what you expected, what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: driver
+    attributes:
+      label: Sandbox driver
+      options: ["local", "docker", "vultr", "not sure"]
+    validations:
+      required: true
+  - type: dropdown
+    id: llm-mode
+    attributes:
+      label: Planner mode
+      options: ["mock (AIRLOCK_MOCK_LLM=1 or no API key)", "live (Vultr Serverless Inference)"]
+    validations:
+      required: true
+  - type: textarea
+    id: timeline
+    attributes:
+      label: Event timeline / receipt
+      description: Paste or attach the run receipt (download button on the task page) — it's the fastest way for us to see what the sandbox actually did.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, how you're running Airlock (uvicorn directly, compose, cloud-init VM).
+      placeholder: "e.g. Ubuntu 24.04, Python 3.14, deploy/setup-vm.sh on a Vultr VM"
+    validations:
+      required: true
